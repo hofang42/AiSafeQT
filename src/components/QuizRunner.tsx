@@ -36,14 +36,19 @@ export const QuizRunner = ({ mode }: { mode: "quiz" | "scenario" }) => {
   const [score, setScore] = useState(0);
   const [loading, setLoading] = useState(false);
   const { user, recordQuiz, recordScenario } = useAuth();
-  const KEY = `aisafe.session.${mode}`;
+  // Mỗi tài khoản trên thiết bị có bài làm riêng; chưa đăng nhập thì dùng chung một chỗ.
+  const owner = (() => {
+    try { return JSON.parse(localStorage.getItem("aisafe.session") || "null") || "guest"; } catch { return "guest"; }
+  })();
+  const KEY = `aisafe.quiz.${mode}.${owner}`;
   const recorded = useRef(false); // đã ghi điểm cho lượt này chưa
   const ready = useRef(false); // đã khôi phục xong, từ đây mới bắt đầu lưu
 
   // Khôi phục bài đang làm dở khi học sinh quay lại trang
   useEffect(() => {
-    let saved: { ids?: string[]; topic?: string; size?: number; i?: number; sel?: number[]; checked?: boolean; score?: number } | null = null;
-    try { saved = JSON.parse(sessionStorage.getItem(KEY) || "null"); } catch { /* bỏ qua */ }
+    let saved: { savedAt?: number; ids?: string[]; topic?: string; size?: number; i?: number; sel?: number[]; checked?: boolean; score?: number } | null = null;
+    try { saved = JSON.parse(localStorage.getItem(KEY) || "null"); } catch { /* bỏ qua */ }
+    if (saved && Date.now() - (saved.savedAt ?? 0) > 30 * 24 * 3600 * 1000) saved = null; // bài làm dở quá 30 ngày thì bỏ
     if (!saved || !Array.isArray(saved.ids) || saved.ids.length === 0) { ready.current = true; return; }
     const ids = saved.ids;
     const snap = saved;
@@ -68,12 +73,12 @@ export const QuizRunner = ({ mode }: { mode: "quiz" | "scenario" }) => {
     return () => { alive = false; };
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
-  // Lưu tiến độ sau mỗi thay đổi (sessionStorage: còn khi chuyển trang hoặc tải lại, mất khi đóng tab)
+  // Lưu tiến độ sau mỗi thay đổi (localStorage: giữ lại cả khi đóng trình duyệt, tối đa 30 ngày)
   useEffect(() => {
     if (!ready.current) return;
     try {
-      if (!run) sessionStorage.removeItem(KEY);
-      else sessionStorage.setItem(KEY, JSON.stringify({ ids: run.map((q) => q.id), topic, size, i, sel: [...sel], checked, score }));
+      if (!run) localStorage.removeItem(KEY);
+      else localStorage.setItem(KEY, JSON.stringify({ savedAt: Date.now(), ids: run.map((q) => q.id), topic, size, i, sel: [...sel], checked, score }));
     } catch { /* bỏ qua */ }
   }, [run, topic, size, i, sel, checked, score]); // eslint-disable-line react-hooks/exhaustive-deps
 

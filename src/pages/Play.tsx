@@ -67,11 +67,11 @@ const Bag = () => {
 
 const Play = () => {
   const [tab, setTab] = useState(() => {
-    try { return sessionStorage.getItem("aisafe.play.tab") || "quiz"; } catch { return "quiz"; }
+    try { return localStorage.getItem("aisafe.play.tab") || "quiz"; } catch { return "quiz"; }
   });
   const change = (v: string) => {
     setTab(v);
-    try { sessionStorage.setItem("aisafe.play.tab", v); } catch { /* bỏ qua */ }
+    try { localStorage.setItem("aisafe.play.tab", v); } catch { /* bỏ qua */ }
   };
   return (
   <Layout title="Trò chơi và kiểm tra kiến thức" subtitle="Làm bài trắc nghiệm theo từng loại thiên tai hoặc chơi trò chuẩn bị túi khẩn cấp.">
