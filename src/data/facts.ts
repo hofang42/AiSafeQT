@@ -68,6 +68,7 @@ export interface Source {
 }
 
 export const sources: Source[] = [
+  { title: "Hệ thống giám sát thiên tai Việt Nam (VNDMS)", url: "https://vndms.gov.vn", kind: "Tin tức", note: "Theo dõi mưa, mực nước, gió, hồ xả lũ theo thời gian thực" },
   { title: "Hướng dẫn an toàn khi mưa lớn, lũ, lũ quét, sạt lở (Nghệ An đến Quảng Trị)", url: "https://hatinh.gov.vn/vi/bai-viet/huong-dan-dam-bao-an-toan-khi-co-mua-lon-lu-ngap-lut-lu-quet-va-sat-lo-dat-cho-khu-vuc-tu-nghe-an-den-quang-tri", kind: "Hướng dẫn", note: "Cục Quản lý đê điều và PCTT" },
   { title: "Hướng dẫn an toàn trước lũ quét và sạt lở đất", url: "https://www.unicef.org/vietnam/vi/an-toan-lu-quet-sat-lo-dat", kind: "Hướng dẫn", note: "UNICEF Việt Nam" },
   { title: "Dấu hiệu nhận biết nguy cơ lũ quét, sạt lở đất và cách phòng tránh", url: "https://vietnamnet.vn/dau-hieu-nhan-biet-nguy-co-lu-quet-sat-lo-dat-nguyen-nhan-va-cach-phong-tranh-2243777.html", kind: "Hướng dẫn", note: "VietNamNet" },

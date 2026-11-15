@@ -131,6 +131,16 @@ const SafetyMap = () => {
         </p>
       </div>
 
+      <div className="panel mt-6 p-5 max-w-4xl flex flex-wrap items-center justify-between gap-4">
+        <div className="min-w-0">
+          <p className="font-display font-bold text-lg leading-tight">Theo dõi thiên tai theo thời gian thực</p>
+          <p className="text-sm text-muted-foreground mt-1">Bản đồ trên đây là kiến thức nền để học. Mực nước, mưa, gió, hồ xả lũ cập nhật từng giờ xem tại Hệ thống giám sát thiên tai Việt Nam (VNDMS) của Bộ Nông nghiệp và Môi trường.</p>
+        </div>
+        <a href="https://vndms.gov.vn" target="_blank" rel="noreferrer" className="shrink-0 inline-flex items-center gap-2 rounded-md bg-primary text-primary-foreground px-4 min-h-11 font-semibold">
+          Mở VNDMS <ExternalIcon size={16} />
+        </a>
+      </div>
+
       <h2 className="text-xl font-bold mt-10 mb-1">Các đợt lũ gần đây</h2>
       <p className="text-sm text-muted-foreground mb-4">Số liệu chép đúng theo bài báo gốc. Chỗ bài không nêu thì không ghi.</p>
       <div className="grid gap-4 lg:grid-cols-3">
