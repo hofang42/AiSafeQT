@@ -18,7 +18,9 @@ export const Navigation = () => {
   const { pathname } = useLocation();
   const account = user ? { to: "/ho-so", label: user.name.split(" ").slice(-1)[0] } : { to: "/dang-nhap", label: "Đăng nhập" };
 
-  useEffect(() => setMore(false), [pathname]);
+  useEffect(() => {
+    setMore(false);
+  }, [pathname]);
 
   return (
     <>
