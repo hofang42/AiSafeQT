@@ -10,6 +10,8 @@ interface Message {
   content: string;
 }
 
+const CHAT_URL = import.meta.env.VITE_CHAT_URL || "https://morning-morning-64c7.hoangk5fc5.workers.dev";
+
 const quick = [
   "Khi có bão em cần làm gì?",
   "Dấu hiệu nào cho biết sắp có lũ quét?",
@@ -40,7 +42,7 @@ const Assistant = () => {
     setLoading(true);
     let reply: string;
     try {
-      const r = await fetch("/api/chat", {
+      const r = await fetch(CHAT_URL, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ messages: next.filter((m, i) => i > 0 || m.role === "user") }),
