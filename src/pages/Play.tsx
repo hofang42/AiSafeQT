@@ -65,9 +65,17 @@ const Bag = () => {
   );
 };
 
-const Play = () => (
+const Play = () => {
+  const [tab, setTab] = useState(() => {
+    try { return sessionStorage.getItem("aisafe.play.tab") || "quiz"; } catch { return "quiz"; }
+  });
+  const change = (v: string) => {
+    setTab(v);
+    try { sessionStorage.setItem("aisafe.play.tab", v); } catch { /* bỏ qua */ }
+  };
+  return (
   <Layout title="Trò chơi và kiểm tra kiến thức" subtitle="Làm bài trắc nghiệm theo từng loại thiên tai hoặc chơi trò chuẩn bị túi khẩn cấp.">
-    <Tabs defaultValue="quiz">
+    <Tabs value={tab} onValueChange={change}>
       <TabsList className="mb-4 h-12">
         <TabsTrigger value="quiz" className="gap-2 min-h-10 px-4"><TargetIcon size={18} />Trắc nghiệm</TabsTrigger>
         <TabsTrigger value="bag" className="gap-2 min-h-10 px-4"><BagIcon size={18} />Túi khẩn cấp</TabsTrigger>
@@ -76,6 +84,7 @@ const Play = () => (
       <TabsContent value="bag"><Bag /></TabsContent>
     </Tabs>
   </Layout>
-);
+  );
+};
 
 export default Play;

@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { ArrowRight, CheckIcon, CrossIcon, InfoIcon, RefreshIcon } from "@/components/icons";
@@ -36,10 +36,51 @@ export const QuizRunner = ({ mode }: { mode: "quiz" | "scenario" }) => {
   const [score, setScore] = useState(0);
   const [loading, setLoading] = useState(false);
   const { user, recordQuiz, recordScenario } = useAuth();
+  const KEY = `aisafe.session.${mode}`;
+  const recorded = useRef(false); // đã ghi điểm cho lượt này chưa
+  const ready = useRef(false); // đã khôi phục xong, từ đây mới bắt đầu lưu
+
+  // Khôi phục bài đang làm dở khi học sinh quay lại trang
+  useEffect(() => {
+    let saved: { ids?: string[]; topic?: string; size?: number; i?: number; sel?: number[]; checked?: boolean; score?: number } | null = null;
+    try { saved = JSON.parse(sessionStorage.getItem(KEY) || "null"); } catch { /* bỏ qua */ }
+    if (!saved || !Array.isArray(saved.ids) || saved.ids.length === 0) { ready.current = true; return; }
+    const ids = saved.ids;
+    const snap = saved;
+    let alive = true;
+    setLoading(true);
+    import("@/data/questions.json")
+      .then((m) => {
+        if (!alive) return;
+        const data = (m as unknown as { default: Q[] }).default;
+        setAll(data);
+        const byId = new Map(data.map((q) => [q.id, q]));
+        const qs = ids.map((id) => byId.get(id)).filter(Boolean) as Q[];
+        if (qs.length === ids.length) {
+          setTopic(snap.topic ?? "all"); setSize(snap.size ?? sizes[0]); setRun(qs);
+          setI(snap.i ?? 0); setSel(new Set(snap.sel ?? [])); setChecked(!!snap.checked); setScore(snap.score ?? 0);
+          recorded.current = (snap.i ?? 0) >= qs.length; // lượt đã xong thì không ghi điểm lại
+        }
+        setLoading(false);
+        ready.current = true;
+      })
+      .catch(() => { setLoading(false); ready.current = true; });
+    return () => { alive = false; };
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+
+  // Lưu tiến độ sau mỗi thay đổi (sessionStorage: còn khi chuyển trang hoặc tải lại, mất khi đóng tab)
+  useEffect(() => {
+    if (!ready.current) return;
+    try {
+      if (!run) sessionStorage.removeItem(KEY);
+      else sessionStorage.setItem(KEY, JSON.stringify({ ids: run.map((q) => q.id), topic, size, i, sel: [...sel], checked, score }));
+    } catch { /* bỏ qua */ }
+  }, [run, topic, size, i, sel, checked, score]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const finished = run !== null && i >= run.length;
   useEffect(() => {
-    if (!finished || !run) return;
+    if (!finished || !run || recorded.current) return;
+    recorded.current = true;
     if (scenario) recordScenario(topic, score, run.length);
     else recordQuiz(score, run.length);
   }, [finished]); // eslint-disable-line react-hooks/exhaustive-deps
@@ -52,6 +93,7 @@ export const QuizRunner = ({ mode }: { mode: "quiz" | "scenario" }) => {
       setAll(data);
     }
     const pool = data.filter((q) => (topic === "all" || q.t === topic) && (!scenario || q.s));
+    recorded.current = false;
     setRun(shuffle(pool).slice(0, size));
     setI(0); setSel(new Set()); setChecked(false); setScore(0);
     setLoading(false);
