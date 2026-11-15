@@ -21,6 +21,34 @@ export interface FloodEvent {
 
 export const floodEvents: FloodEvent[] = [
   {
+    id: "2024-10-qb",
+    date: "28/10/2024",
+    title: "Lũ lớn ở Quảng Bình (cũ), tháng 10/2024",
+    summary: [
+      "Lệ Thủy có 15.801 nhà bị ngập, Quảng Ninh 11.540 hộ, Đồng Hới khoảng 1.000 hộ.",
+      "58 thôn bản ở Lệ Thủy và Quảng Ninh bị chia cắt. Tỉnh di dời hơn 1.200 hộ (3.522 nhân khẩu).",
+      "Có 84 điểm ngập trên quốc lộ và tỉnh lộ, 37 vị trí sạt lở trên QL9B.",
+      "Tỉnh có hơn 152 hồ chứa thủy lợi và 2 hồ thủy điện, dung tích hồ thủy lợi đạt 94,33% đến 98,92%.",
+    ],
+    readings: [
+      { river: "Nhật Lệ", station: "Đồng Hới", level: "2,11 m (11 giờ ngày 28/10)", vsAlarm: "trên báo động III 0,11 m, vượt lũ lịch sử 1983 (2,05 m)" },
+      { river: "Kiến Giang", station: "Lệ Thủy", level: "dao động", vsAlarm: "trên báo động III khoảng 1 m, thấp hơn lũ lịch sử 2020 khoảng 1,2 m" },
+    ],
+    source: "Báo Tuổi Trẻ và Báo Đại biểu Nhân dân, 28/10/2024",
+    url: "https://tuoitre.vn/lu-tren-song-nhat-le-quang-binh-vuot-muc-lich-su-nam-1983-mien-trung-mua-lon-toi-30-10-20241028113544082.htm",
+  },
+  {
+    id: "2020-10-kg",
+    date: "19/10/2020",
+    title: "Lũ lịch sử sông Kiến Giang, tháng 10/2020",
+    summary: [
+      "Đỉnh lũ sông Kiến Giang ngày 19/10/2020 là 4,88 m, cao hơn đỉnh lũ năm 1979 (3,91 m).",
+      "Đồng bằng Lệ Thủy ngập 2 đến 4 m, kéo dài hơn 10 ngày.",
+    ],
+    source: "Báo VnExpress, 29/10/2024",
+    url: "https://vnexpress.net/chay-lu-ben-dong-kien-giang-4809550.html",
+  },
+  {
     id: "2025-11",
     date: "3/11/2025",
     title: "Mưa lũ đầu tháng 11/2025",

@@ -22,7 +22,7 @@ const LegendPin = ({ color }: { color: string }) => (
 
 const esc = (s: string) => s.replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]!));
 
-const MAIN_RIVERS = ["Thạch Hãn", "Hiếu", "Bến Hải", "Ô Lâu"];
+const MAIN_RIVERS = ["Thạch Hãn", "Hiếu", "Bến Hải", "Ô Lâu", "Kiến Giang", "Nhật Lệ", "Gianh", "Roòn"];
 
 const SafetyMap = () => {
   const ref = useRef<HTMLDivElement>(null);
@@ -37,7 +37,7 @@ const SafetyMap = () => {
 
   useEffect(() => {
     if (!ref.current || mapRef.current) return;
-    const map = L.map(ref.current, { scrollWheelZoom: false }).setView([16.82, 107.0], 9);
+    const map = L.map(ref.current, { scrollWheelZoom: false }).setView([17.2, 106.75], 8);
     riverRef.current = L.layerGroup().addTo(map);
     layerRef.current = L.layerGroup().addTo(map);
     mapRef.current = map;
@@ -96,7 +96,7 @@ const SafetyMap = () => {
   const shown = places.filter((p) => filter === "all" || p.kind === filter);
 
   return (
-    <Layout title="Bản đồ học tập an toàn" subtitle="Xem vùng ngập lụt, nơi dễ lũ quét sạt lở, hồ chứa, sông chính và bệnh viện tại Quảng Trị. Chạm vào ghim để xem nguồn.">
+    <Layout title="Bản đồ học tập an toàn" subtitle="Xem vùng ngập lụt, nơi dễ lũ quét sạt lở, hồ chứa, sông chính và bệnh viện trên địa bàn tỉnh Quảng Trị sau sáp nhập (gồm cả Quảng Bình cũ). Chạm vào ghim để xem nguồn.">
       <div className="flex gap-2 overflow-x-auto pb-2 -mx-4 px-4 sm:mx-0 sm:px-0 sm:flex-wrap" role="group" aria-label="Lọc theo loại">
         {([["all", "Tất cả", "#12537a"], ...(Object.keys(kindMeta) as PlaceKind[]).map((k) => [k, kindMeta[k].label, kindMeta[k].color])] as [string, string, string][]).map(([k, label, color]) => (
           <button

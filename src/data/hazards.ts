@@ -29,7 +29,7 @@ export const hazards: Hazard[] = [
     name: "Lũ lụt, ngập úng",
     emoji: "🌊",
     color: "bg-blue-600",
-    summary: "Nước sông dâng cao, ngập nhà và đường; các vùng trũng ven sông Thạch Hãn, Bến Hải, Hiếu dễ bị ngập.",
+    summary: "Nước sông dâng cao, ngập nhà và đường; các vùng trũng ven sông Thạch Hãn, Bến Hải, Hiếu, Nhật Lệ, Kiến Giang dễ bị ngập.",
     signs: ["Mưa to kéo dài nhiều giờ", "Mực nước sông lên nhanh", "Nước tràn lên đường, vào sân nhà"],
     before: ["Biết điểm cao, nơi trú ẩn gần nhà", "Kê cao đồ đạc, giấy tờ, sách vở", "Học bơi và cách dùng phao cứu sinh"],
     during: ["Không lội qua nơi nước chảy xiết, ngầm tràn", "Tắt điện, không chạm vào thiết bị điện khi ướt", "Gọi người lớn, lực lượng cứu hộ khi cần"],

@@ -29,7 +29,7 @@ export const basisLabel: Record<Place["basis"], string> = {
 };
 
 /**
- * Toạ độ địa danh và cơ sở hạ tầng lấy từ OpenStreetMap (ODbL), thu thập 15/11/2026.
+ * Toạ độ địa danh và cơ sở hạ tầng lấy từ OpenStreetMap (ODbL), thu thập 15/11/2026, gồm cả Quảng Bình (cũ) nay thuộc tỉnh Quảng Trị sau sáp nhập.
  * Các điểm ngập, sạt lở lấy từ bài báo, đặt ở trung tâm xã nên chỉ là vị trí khu vực.
  * Chưa có danh sách nhà tránh trú chính thức: hỏi Ban Chỉ huy PCTT&TKCN tỉnh hoặc UBND xã.
  */
@@ -83,4 +83,22 @@ export const places: Place[] = [
   { id: "y8", name: "Trung tâm Y tế khu vực Hải Lăng", kind: "y-te", area: "Hải Lăng", lat: 16.7012, lng: 107.2535, note: "Cấp cứu: gọi 115.", basis: "osm" },
   { id: "y9", name: "Trung tâm Y tế khu vực Đakrông", kind: "y-te", area: "Đakrông", lat: 16.6977, lng: 106.8803, note: "Cấp cứu: gọi 115.", basis: "osm" },
   { id: "y10", name: "Trung tâm Y tế khu vực Cam Lộ", kind: "y-te", area: "Cam Lộ", lat: 16.8077, lng: 107.0045, note: "Cấp cứu: gọi 115.", basis: "osm" },
+  /* Quảng Bình (cũ), nay thuộc tỉnh Quảng Trị sau sáp nhập */
+  { id: "n6", name: "Huyện Lệ Thủy", kind: "ngap", area: "Quảng Bình (cũ)", lat: 17.2239, lng: 106.7864, note: "28/10/2024: 15.801 nhà bị ngập. Lũ tháng 10/2020 làm đồng bằng Lệ Thủy ngập 2 đến 4 m, kéo dài hơn 10 ngày. Đỉnh lũ sông Kiến Giang ngày 19/10/2020 là 4,88 m, cao hơn đỉnh lũ 1979 (3,91 m).", basis: "gan-dung", source: "Báo Đại biểu Nhân dân, 28/10/2024 và Báo VnExpress, 29/10/2024", url: "https://daibieunhandan.vn/quang-binh-mua-lon-don-dap-so-nha-ngap-tang-len-hon-28-000-ho-10350409.html" },
+  { id: "n7", name: "Huyện Quảng Ninh", kind: "ngap", area: "Quảng Bình (cũ)", lat: 17.4023, lng: 106.6403, note: "28/10/2024: 11.540 hộ bị ngập. Có 58 thôn bản ở Lệ Thủy và Quảng Ninh bị chia cắt.", basis: "gan-dung", source: "Báo Đại biểu Nhân dân, 28/10/2024", url: "https://daibieunhandan.vn/quang-binh-mua-lon-don-dap-so-nha-ngap-tang-len-hon-28-000-ho-10350409.html" },
+  { id: "n8", name: "Thành phố Đồng Hới", kind: "ngap", area: "Quảng Bình (cũ)", lat: 17.4668, lng: 106.6045, note: "28/10/2024: khoảng 1.000 hộ bị ngập. Sông Nhật Lệ tại Đồng Hới đạt 2,11 m, trên báo động III 0,11 m và vượt đỉnh lũ lịch sử 1983 (2,05 m).", basis: "gan-dung", source: "Báo Tuổi Trẻ, 28/10/2024", url: "https://tuoitre.vn/lu-tren-song-nhat-le-quang-binh-vuot-muc-lich-su-nam-1983-mien-trung-mua-lon-toi-30-10-20241028113544082.htm" },
+  { id: "h12", name: "Hồ Phú Vinh", kind: "ho", area: "Quảng Bình (cũ)", lat: 17.455, lng: 106.5415, note: "Hồ chứa nước. Khi hồ xả lũ, vùng hạ lưu có thể ngập nhanh.", basis: "osm" },
+  { id: "h13", name: "Hồ Cẩm Ly", kind: "ho", area: "Quảng Bình (cũ)", lat: 17.2023, lng: 106.6496, note: "Hồ chứa nước. Khi hồ xả lũ, vùng hạ lưu có thể ngập nhanh.", basis: "osm" },
+  { id: "h14", name: "Hồ Rào Đá", kind: "ho", area: "Quảng Bình (cũ)", lat: 17.2631, lng: 106.6127, note: "Hồ chứa nước. Khi hồ xả lũ, vùng hạ lưu có thể ngập nhanh.", basis: "osm" },
+  { id: "h15", name: "Hồ Bàu Trạng", kind: "ho", area: "Quảng Bình (cũ)", lat: 17.62, lng: 106.4241, note: "Hồ chứa nước. Khi hồ xả lũ, vùng hạ lưu có thể ngập nhanh.", basis: "osm" },
+  { id: "h16", name: "Hồ Vực Nồi", kind: "ho", area: "Quảng Bình (cũ)", lat: 17.6009, lng: 106.4562, note: "Hồ chứa nước. Khi hồ xả lũ, vùng hạ lưu có thể ngập nhanh.", basis: "osm" },
+  { id: "h17", name: "Hồ Tiên Lang", kind: "ho", area: "Quảng Bình (cũ)", lat: 17.7979, lng: 106.3216, note: "Hồ chứa nước. Khi hồ xả lũ, vùng hạ lưu có thể ngập nhanh.", basis: "osm" },
+  { id: "h18", name: "Hồ Vực Tròn", kind: "ho", area: "Quảng Bình (cũ)", lat: 17.9001, lng: 106.3496, note: "Hồ chứa nước. Khi hồ xả lũ, vùng hạ lưu có thể ngập nhanh.", basis: "osm" },
+  { id: "h19", name: "Hồ Đá Cờ", kind: "ho", area: "Quảng Bình (cũ)", lat: 17.9495, lng: 106.4729, note: "Hồ chứa nước. Khi hồ xả lũ, vùng hạ lưu có thể ngập nhanh.", basis: "osm" },
+  { id: "y11", name: "Bệnh viện Đa khoa khu vực Đồng Hới", kind: "y-te", area: "Quảng Bình (cũ)", lat: 17.4536, lng: 106.6214, note: "Cấp cứu: gọi 115.", basis: "osm" },
+  { id: "y12", name: "Bệnh viện Hữu nghị Việt Nam - Cuba Đồng Hới", kind: "y-te", area: "Quảng Bình (cũ)", lat: 17.4743, lng: 106.6007, note: "Cấp cứu: gọi 115.", basis: "osm" },
+  { id: "y13", name: "Bệnh viện Đa khoa khu vực Quảng Ninh", kind: "y-te", area: "Quảng Bình (cũ)", lat: 17.3656, lng: 106.6751, note: "Cấp cứu: gọi 115.", basis: "osm" },
+  { id: "y14", name: "Bệnh viện Đa khoa khu vực Lệ Thủy", kind: "y-te", area: "Quảng Bình (cũ)", lat: 17.2202, lng: 106.7864, note: "Cấp cứu: gọi 115.", basis: "osm" },
+  { id: "y15", name: "Bệnh viện Đa khoa khu vực Bố Trạch", kind: "y-te", area: "Quảng Bình (cũ)", lat: 17.5892, lng: 106.5194, note: "Cấp cứu: gọi 115.", basis: "osm" },
+  { id: "y16", name: "Bệnh viện Đa khoa khu vực Bắc Quảng Trị (Ba Đồn)", kind: "y-te", area: "Quảng Bình (cũ)", lat: 17.7571, lng: 106.4339, note: "Cấp cứu: gọi 115.", basis: "osm" },
 ];
