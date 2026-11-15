@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Progress as Bar } from "@/components/ui/progress";
 import { Layout } from "@/components/Layout";
 import { useAuth } from "@/lib/auth";
-import { scenarios } from "@/data/scenarios";
+import { quizTopics } from "@/data/questionMeta";
 import { bagItems } from "@/data/quiz";
 import { MedalIcon, CheckIcon } from "@/components/icons";
 
@@ -11,14 +11,16 @@ const Profile = () => {
   const { user, progress, logout } = useAuth();
   if (!user) return <Navigate to="/dang-nhap" replace />;
 
-  const done = Object.keys(progress.scenarios).length;
-  const perfect = Object.values(progress.scenarios).filter((s) => s.score === s.total).length;
+  const rec = Object.entries(progress.scenarios).filter(([k]) => k !== "all");
+  const done = rec.length;
+  const topicTotal = quizTopics.length;
+  const perfect = rec.filter(([, s]) => s.score === s.total).length;
   const bagMax = bagItems.length;
 
   const badges = [
-    { name: "Bước đầu an toàn", got: done >= 1, how: "Hoàn thành 1 tình huống" },
-    { name: "Người luyện tình huống", got: done >= 5, how: "Hoàn thành 5 tình huống" },
-    { name: "Xử lý hoàn hảo", got: perfect >= 3, how: "Đúng toàn bộ ở 3 tình huống" },
+    { name: "Bước đầu an toàn", got: done >= 1, how: "Luyện tình huống ở 1 chủ đề" },
+    { name: "Người luyện tình huống", got: done >= 5, how: "Luyện tình huống ở 5 chủ đề" },
+    { name: "Xử lý hoàn hảo", got: perfect >= 3, how: "Đúng toàn bộ ở 3 chủ đề" },
     { name: "Kiến thức vững", got: progress.quiz.best >= 80, how: "Đạt từ 80% ở bài trắc nghiệm" },
     { name: "Túi khẩn cấp chuẩn", got: progress.bag.best >= bagMax, how: `Chọn đúng ${bagMax}/${bagMax} món` },
   ];
@@ -27,9 +29,9 @@ const Profile = () => {
     <Layout title={`Xin chào, ${user.name}`} subtitle={[user.grade && `Lớp ${user.grade}`, user.school].filter(Boolean).join(" · ") || "Tiến độ học tập của em"}>
       <div className="grid gap-4 md:grid-cols-3 mb-8">
         <div className="panel p-5">
-          <p className="text-sm text-muted-foreground">Tình huống đã hoàn thành</p>
-          <p className="font-display text-4xl font-bold mt-1">{done}<span className="text-xl text-muted-foreground">/{scenarios.length}</span></p>
-          <Bar className="mt-3" value={(done / scenarios.length) * 100} />
+          <p className="text-sm text-muted-foreground">Chủ đề tình huống đã luyện</p>
+          <p className="font-display text-4xl font-bold mt-1">{done}<span className="text-xl text-muted-foreground">/{topicTotal}</span></p>
+          <Bar className="mt-3" value={(done / topicTotal) * 100} />
         </div>
         <div className="panel p-5">
           <p className="text-sm text-muted-foreground">Điểm trắc nghiệm cao nhất</p>
