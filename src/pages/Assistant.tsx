@@ -4,6 +4,7 @@ import { Input } from "@/components/ui/input";
 import { Layout } from "@/components/Layout";
 import { ChatIcon, SendIcon, UserIcon, WarningIcon } from "@/components/icons";
 import { offlineAnswer } from "@/lib/offlineAnswer";
+import { useAuth } from "@/lib/auth";
 
 interface Message {
   role: "user" | "assistant";
@@ -11,6 +12,22 @@ interface Message {
 }
 
 const CHAT_URL = import.meta.env.VITE_CHAT_URL || "https://morning-morning-64c7.hoangk5fc5.workers.dev";
+
+const greeting: Message = {
+  role: "assistant",
+  content: "Xin chào! Mình là Trợ lý AI Safe QT. Em có thể hỏi mình về bão, lũ lụt, lũ quét, sạt lở, dông sét, nắng nóng và cách giữ an toàn.",
+};
+
+const loadChat = (key: string): Message[] => {
+  try {
+    const raw = JSON.parse(localStorage.getItem(key) || "null");
+    if (raw && Date.now() - raw.at < 30 * 24 * 3600 * 1000 && Array.isArray(raw.m) && raw.m.length) {
+      const ok = raw.m.filter((x: Message) => x && (x.role === "user" || x.role === "assistant") && typeof x.content === "string");
+      if (ok.length) return ok;
+    }
+  } catch { /* hỏng dữ liệu: bắt đầu mới */ }
+  return [greeting];
+};
 
 const quick = [
   "Khi có bão em cần làm gì?",
@@ -22,9 +39,22 @@ const quick = [
 ];
 
 const Assistant = () => {
-  const [messages, setMessages] = useState<Message[]>([
-    { role: "assistant", content: "Xin chào! Mình là Trợ lý AI Safe QT. Em có thể hỏi mình về bão, lũ lụt, lũ quét, sạt lở, dông sét, nắng nóng và cách giữ an toàn." },
-  ]);
+  const { user } = useAuth();
+  const storeKey = `aisafe.chat.${user?.username ?? "khach"}`;
+  const [messages, setMessages] = useState<Message[]>(() => loadChat(storeKey));
+
+  // Lưu cuộc trò chuyện để F5 hoặc chuyển trang vẫn còn (giữ 30 ngày)
+  useEffect(() => {
+    try {
+      localStorage.setItem(storeKey, JSON.stringify({ at: Date.now(), m: messages.slice(-60) }));
+    } catch { /* bộ nhớ đầy hoặc bị chặn: bỏ qua */ }
+  }, [messages, storeKey]);
+
+  const clearChat = () => {
+    if (loading) return;
+    setMessages([greeting]);
+    try { localStorage.removeItem(storeKey); } catch { /* bỏ qua */ }
+  };
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
   const logRef = useRef<HTMLDivElement>(null);
@@ -56,14 +86,24 @@ const Assistant = () => {
     } catch {
       reply = offlineAnswer(q);
     }
-    setMessages([...next, { role: "assistant", content: reply }]);
+    const done: Message[] = [...next, { role: "assistant", content: reply }];
+    // Ghi ngay để nếu em đã chuyển trang trong lúc chờ thì câu trả lời vẫn được giữ
+    try { localStorage.setItem(storeKey, JSON.stringify({ at: Date.now(), m: done.slice(-60) })); } catch { /* bỏ qua */ }
+    setMessages(done);
     setLoading(false);
   };
 
   return (
     <Layout title="Trợ lý AI hỏi đáp về thiên tai" subtitle="Đặt câu hỏi về các loại hình thiên tai, dấu hiệu nguy hiểm và cách phòng tránh.">
       <div className="max-w-3xl">
-        <p className="text-sm font-semibold mb-2">Gợi ý câu hỏi</p>
+        <div className="flex items-center justify-between mb-2">
+          <p className="text-sm font-semibold">Gợi ý câu hỏi</p>
+          {messages.length > 1 && (
+            <button onClick={clearChat} disabled={loading} className="text-sm text-muted-foreground underline min-h-10 px-2 disabled:opacity-50">
+              Xóa cuộc trò chuyện
+            </button>
+          )}
+        </div>
         <div className="flex gap-2 overflow-x-auto pb-2 -mx-4 px-4 sm:mx-0 sm:px-0 sm:flex-wrap">
           {quick.map((q) => (
             <button
