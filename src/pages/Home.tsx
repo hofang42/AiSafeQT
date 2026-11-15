@@ -7,11 +7,11 @@ import { ArrowRight, BranchIcon, ChatIcon, MegaphoneIcon, PhoneIcon, PinIcon, Ta
 import { hazards } from "@/data/hazards";
 import { facts } from "@/data/facts";
 import { scenarios } from "@/data/scenarios";
-import { quiz } from "@/data/quiz";
+import { totalQuestions } from "@/data/questionMeta";
 
 const features = [
   { to: "/tinh-huong", icon: BranchIcon, tone: "hz-bao", title: "Tình huống mô phỏng", desc: `${scenarios.length} tình huống thật. Em chọn cách xử lý, mình phản hồi ngay.` },
-  { to: "/tro-choi", icon: TargetIcon, tone: "hz-nang", title: "Trò chơi và kiểm tra", desc: `${quiz.length} câu trắc nghiệm và trò chơi gói túi khẩn cấp.` },
+  { to: "/tro-choi", icon: TargetIcon, tone: "hz-nang", title: "Trò chơi và kiểm tra", desc: `${totalQuestions} câu trắc nghiệm, 15 chủ đề, và trò chơi gói túi khẩn cấp.` },
   { to: "/tro-ly", icon: ChatIcon, tone: "hz-lu", title: "Hỏi trợ lý AI", desc: "Có điều chưa hiểu? Cứ hỏi, trợ lý trả lời bằng lời dễ hiểu." },
   { to: "/ban-do", icon: PinIcon, tone: "hz-luquet", title: "Bản đồ an toàn", desc: "Xem vùng nguy cơ và nơi trú ẩn quanh Quảng Trị." },
   { to: "/tuyen-truyen", icon: MegaphoneIcon, tone: "hz-set", title: "Góc tuyên truyền", desc: "Khẩu hiệu, thẻ hướng dẫn để chia sẻ cùng gia đình, bạn bè." },
