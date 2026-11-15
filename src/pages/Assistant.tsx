@@ -27,10 +27,14 @@ const Assistant = () => {
   ]);
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
-  const endRef = useRef<HTMLDivElement>(null);
+  const logRef = useRef<HTMLDivElement>(null);
+  const first = useRef(true);
 
+  // Chỉ cuộn bên trong khung chat, không cuộn cả trang
   useEffect(() => {
-    endRef.current?.scrollIntoView({ behavior: "smooth", block: "end" });
+    if (first.current) { first.current = false; return; }
+    const el = logRef.current;
+    if (el) el.scrollTo({ top: el.scrollHeight, behavior: "smooth" });
   }, [messages, loading]);
 
   const send = async (text: string) => {
@@ -73,7 +77,7 @@ const Assistant = () => {
         </div>
 
         <section className="panel mt-3 flex flex-col" aria-label="Cuộc trò chuyện">
-          <div className="h-[52dvh] min-h-72 overflow-y-auto p-4 space-y-4" role="log" aria-live="polite">
+          <div ref={logRef} className="h-[52dvh] min-h-72 overflow-y-auto overscroll-contain p-4 space-y-4" role="log" aria-live="polite">
             {messages.map((m, i) => (
               <div key={i} className={`flex gap-2.5 ${m.role === "user" ? "flex-row-reverse" : ""}`}>
                 <span className={`h-8 w-8 shrink-0 rounded-full flex items-center justify-center ${m.role === "user" ? "bg-secondary text-secondary-foreground" : "bg-primary text-primary-foreground"}`}>
@@ -94,7 +98,6 @@ const Assistant = () => {
                 </div>
               </div>
             )}
-            <div ref={endRef} />
           </div>
 
           <form className="flex gap-2 p-3 border-t" onSubmit={(e) => { e.preventDefault(); send(input); }}>
