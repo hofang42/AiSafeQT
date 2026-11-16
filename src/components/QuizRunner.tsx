@@ -227,6 +227,11 @@ export const QuizRunner = ({ mode }: { mode: "quiz" | "scenario" }) => {
           </Button>
         </div>
       )}
+      <div className="mt-5 pt-4 border-t">
+        <Button variant="ghost" onClick={() => { recorded.current = true; setRun(null); }} className="min-h-10 text-muted-foreground">
+          Thoát, không làm nữa
+        </Button>
+      </div>
     </section>
   );
 };
