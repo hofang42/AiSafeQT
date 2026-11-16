@@ -31,7 +31,7 @@ const Home = () => (
           <div className="rise">
             <p className="inline-flex items-center gap-2 rounded-full bg-card border px-3.5 py-1.5 text-sm font-medium">
               <span className="h-2 w-2 rounded-full bg-secondary" aria-hidden />
-              Cùng học cách giữ an toàn mùa mưa bão
+              Cùng học cách giữ an toàn mùa mưa bão với các bạn học sinh trường THCS Phan Đình Phùng tỉnh Quảng Trị
             </p>
             <h1 className="mt-4 text-4xl sm:text-5xl lg:text-6xl font-extrabold leading-[1.08]">
               Mưa bão đến, em đã biết phải làm gì chưa?
